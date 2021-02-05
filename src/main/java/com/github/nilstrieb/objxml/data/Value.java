@@ -29,10 +29,7 @@ public class Value {
 
     @Override
     public String toString() {
-        return "Value{" +
-                "name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return "<" + name + ">" + value + "</" + name + ">";
     }
 
     @Override

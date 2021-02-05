@@ -18,7 +18,13 @@ public class ObjectReader {
     }
 
     public Stream<Value> getValues(Object object) {
-        Stream<Field> fields = getFields(object.getClass());
+        Class<?> clazz = object.getClass();
+
+        if (true) {
+
+        }
+
+        Stream<Field> fields = getFields(clazz);
 
         return fields.map(f -> {
             try {

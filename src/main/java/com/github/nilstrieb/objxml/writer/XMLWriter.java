@@ -9,10 +9,10 @@ public class XMLWriter {
     public String writeObject(String className, Stream<Value> valueStream) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<").append(className).append(">")
-                .append("\n");
+        sb.append("<").append(className).append(">").append("\n");
+
         valueStream.forEach(v -> {
-            sb.append("\t<").append(v.getName()).append(">").append(v.getValue()).append("</").append(v.getName()).append(">\n");
+            sb.append("\t").append(v).append("\n");
         });
 
         sb.append("</").append(className).append(">");
