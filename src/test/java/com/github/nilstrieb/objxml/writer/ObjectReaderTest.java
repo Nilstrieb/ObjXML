@@ -25,17 +25,4 @@ class ObjectReaderTest {
         Stream<Field> f = reader.getFields(BTestData.class);
         assertEquals(2, f.count());
     }
-
-
-    @Test
-    void getValuesTest() {
-        ATestData a = new ATestData("f", 10, "hallo");
-        Stream<Value> values = reader.getValues(a);
-        Value[] expected = {new Value("name", "f"), new Value("age", "10"), new Value("adress", "hallo")};
-        Object[] actual = values.toArray();
-
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], actual[i]);
-        }
-    }
 }
