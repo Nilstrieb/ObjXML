@@ -16,6 +16,23 @@ public class Group extends Value {
         return values;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        //first line <name>
+        sb.append("<").append(getName()).append(">");
+
+        //group members
+        for (Value value : values) {
+            sb.append(value);
+        }
+
+        //last line </name>
+        sb.append("</").append(getName()).append(">");
+
+        return sb.toString();
+    }
+
     public String toString(int i) {
         StringBuilder sb = new StringBuilder();
         //first line <name>

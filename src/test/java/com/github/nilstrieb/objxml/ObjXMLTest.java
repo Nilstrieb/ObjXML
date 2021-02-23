@@ -5,25 +5,18 @@ import com.github.nilstrieb.objxml.sampleclasses.CTestData;
 import com.github.nilstrieb.objxml.sampleclasses.DTestData;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class ObjXMLTest {
 
     ObjXML objXML = new ObjXML();
 
     @Test
-    void simpleTest() {
-        ATestData a = new ATestData("f", 10, "hallo");
-        System.out.println(objXML.toXML(a));
+    void simpleObject() {
+        ATestData a = new ATestData("hallo", 10, "klar");
+
+        assertEquals("<ATestData><name>hallo</name><age>10</age><adress>klar</adress></ATestData>",
+                objXML.parseObject(a));
     }
 
-    @Test
-    void arrayTest() {
-        CTestData a = new CTestData("f", "a", "b", "c", "d");
-        System.out.println(objXML.toXML(a));
-    }
-
-    @Test
-    void listTest() {
-        DTestData a = new DTestData("f", "a", "b", "c", "d");
-        System.out.println(objXML.toXML(a));
-    }
 }
