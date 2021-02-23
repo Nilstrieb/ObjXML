@@ -1,15 +1,19 @@
 package com.github.nilstrieb.objxml;
 
+import com.github.nilstrieb.objxml.data.Group;
 import com.github.nilstrieb.objxml.data.Value;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ObjXML {
 
-    public String parseObject(Object o) {
+    public String serializeObject(Object o) {
         Stream<String> fields = getRelevantFields(o)
                 .map(f -> toValue(f, o)) //: Stream<Value>
                 .map(Value::toString);//Stream<String>
@@ -42,7 +46,34 @@ public class ObjXML {
     }
 
     public Value toValue(Field f, Object o) {
+
+        if (f.getType().isArray()) {
+            return toGroupFromArray(f, o);
+        }
+
+        if (Collection.class.isAssignableFrom(f.getType())) {
+            return toGroupFromList(f, o);
+        }
+
         Object attribute = getValue(f, o);
         return new Value(f.getName(), attribute.toString());
+    }
+
+    private Group toGroupFromList(Field f, Object o) {
+        Collection<?> attribute = (Collection<?>) getValue(f, o);
+        return toGroupFromStream(f, attribute.stream());
+    }
+
+    private Group toGroupFromArray(Field f, Object o) {
+        Object[] attribute = (Object[]) getValue(f, o);
+        return toGroupFromStream(f, Arrays.stream(attribute));
+    }
+
+    private Group toGroupFromStream(Field f, Stream<?> stream) {
+        List<Value> values = stream
+                .map(e -> new Value("e", e.toString()))
+                .collect(Collectors.toList());
+
+        return new Group(f.getName(), values);
     }
 }
